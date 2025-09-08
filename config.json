@@ -1,0 +1,11 @@
+{
+  "folder_to_watch": "path here",
+  "rules": {
+    "Images": [".jpg", ".jpeg", ".png", ".gif", ".webp", ".jfif", ".svg"],
+    "Documents": [".pdf", ".docx", ".doc", ".txt", ".pptx", ".ppt", ".xlsx", ".csv", ".md", ".epub"],
+    "Audio": [".mp3", ".wav", ".flac", ".ogg"],
+    "Video": [".mp4", ".mov", ".avi", ".mkv", ".webm"],
+    "Compressed": [".rar", ".zip", ".7z", ".tar", ".gz"],
+    "Executables": [".exe", ".msi", ".sh", ".bat"]
+  }
+}

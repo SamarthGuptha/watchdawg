@@ -1,5 +1,5 @@
 {
-  "folder_to_watch": "path here",
+  "folder_to_watch": "C:\\Users\\Samarth\\Downloads\\downloads",
   "rules": {
     "Images": [".jpg", ".jpeg", ".png", ".gif", ".webp", ".jfif", ".svg"],
     "Documents": [".pdf", ".docx", ".doc", ".txt", ".pptx", ".ppt", ".xlsx", ".csv", ".md", ".epub"],

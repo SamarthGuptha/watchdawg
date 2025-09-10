@@ -7,5 +7,10 @@
     "Video": [".mp4", ".mov", ".avi", ".mkv", ".webm"],
     "Compressed": [".rar", ".zip", ".7z", ".tar", ".gz"],
     "Executables": [".exe", ".msi", ".sh", ".bat"]
-  }
+  },
+  "organize_by_date": [
+    "Images",
+    "Documents",
+    "Video"
+  ]
 }

@@ -8,8 +8,7 @@ from datetime import datetime
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-class MinimalistHandler(FileSystemEventHandler):
-
+class watchdog(FileSystemEventHandler):
     def __init__(self, folder_to_watch, rules, organize_by_date_folders):
         self.folder_to_watch = folder_to_watch
         self.rules = rules
@@ -89,37 +88,50 @@ class MinimalistHandler(FileSystemEventHandler):
             logging.error(f"An unexpected error occurred while processing '{filename}': {e}")
 
 if __name__ == "__main__":
+    if getattr(sys, 'frozen', False):
+        base_path = os.path.dirname(sys.executable)
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+    config_path = os.path.join(base_path, 'config.json')
+    log_path = os.path.join(base_path, 'watcher.log')
+
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S',
                         handlers=[
-                            logging.FileHandler("watcher.log"),
+                            logging.FileHandler(log_path),
                             logging.StreamHandler(sys.stdout)
                         ])
 
     try:
-        with open("config.json", 'r') as f:
+        with open(config_path, 'r') as f:
             config = json.load(f)
             FOLDER_TO_WATCH = config["folder_to_watch"]
             RULES = config["rules"]
             ORGANIZE_BY_DATE = config.get("organize_by_date", [])
     except FileNotFoundError:
-        logging.error("FATAL: 'config.json' not found. Please ensure it exists.")
+        logging.error(
+            f"FATAL: 'config.json' not found. Ensure it's in the same directory as the executable: {base_path}")
+        time.sleep(10)
         sys.exit(1)
     except json.JSONDecodeError:
         logging.error("FATAL: 'config.json' is not a valid JSON file. Please check its formatting.")
+        time.sleep(10)
         sys.exit(1)
     except KeyError as e:
         logging.error(f"FATAL: Missing key in 'config.json': {e}")
+        time.sleep(10)
         sys.exit(1)
 
     if not os.path.isdir(FOLDER_TO_WATCH):
         logging.error(f"FATAL: The folder '{FOLDER_TO_WATCH}' does not exist. Please check your config.json.")
+        time.sleep(10)
         sys.exit(1)
 
     logging.info(f"Minimalist Watcher started. Monitoring '{FOLDER_TO_WATCH}'...")
 
-    event_handler = MinimalistHandler(FOLDER_TO_WATCH, RULES, ORGANIZE_BY_DATE)
+    event_handler = watchdog(FOLDER_TO_WATCH, RULES, ORGANIZE_BY_DATE)
     observer = Observer()
     observer.schedule(event_handler, FOLDER_TO_WATCH, recursive=False)
     observer.start()

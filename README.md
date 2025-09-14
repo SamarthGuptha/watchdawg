@@ -1,0 +1,1 @@
+Minimalist Watcher monitors a single folder (like your "Downloads" folder) for new files. When a file appears, it's automatically moved into a subdirectory based on its type. For example, .jpg files go to an "Images" folder, and .pdf files go to a "Documents" folder. It's a simple, set-it-and-forget-it solution for a perpetually clean folder.
